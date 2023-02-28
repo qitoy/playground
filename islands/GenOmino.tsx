@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "preact/hooks";
 import { GenOmino, instantiate } from "@/lib/rs_lib.generated.js";
+import { Button } from "@/components/Button.tsx"; 
 
 const block = 40;
 
@@ -23,6 +24,10 @@ export default function Component() {
     };
     const next = () => {
         if(index+1<len) setIndex(index+1);
+    };
+    const drag = () => {
+        const elem = document.getElementById("index")! as HTMLInputElement;
+        setIndex(parseInt(elem.value));
     };
     const prev = () => {
         if(0<index) setIndex(index-1);
@@ -62,13 +67,21 @@ export default function Component() {
     return (
     <>
     <canvas
-    class="border-black border-2 p-0 m-4"
-    width={canvas[0]} height={canvas[1]}
-    ref={canvasRef}></canvas>
-    <button onClick={prev}>prev</button>
-    <button onClick={next}>next</button>
+        class="border-black border-2 p-0 m-4"
+        width={canvas[0]} height={canvas[1]}
+        ref={canvasRef}
+    ></canvas>
+    <Button onClick={prev}>prev</Button>
+    <input
+        onInput={drag}
+        id="index" type="range"
+        min="0" max={len-1}
+        value={index}
+    />
+    <Button onClick={next}>next</Button>
+    <br/>
     <input ref={nRef} type="number" min="1"/>
-    <button onClick={generate}>generate</button>
+    <Button onClick={generate}>generate</Button>
     </>
     );
 }

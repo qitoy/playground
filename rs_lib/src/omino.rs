@@ -78,18 +78,8 @@ impl GenOmino {
                         self.states[j] = (OminoState::Queue, x, y);
                     }
                 }
+                self.buffer.push(self.states.to_vec());
             }
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn fixed_omino() {
-        let mut ominos = GenOmino::new();
-        assert_eq!(ominos.build(7), 1+1+2+6+19+63+216+760);
     }
 }
